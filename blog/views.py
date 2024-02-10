@@ -141,7 +141,7 @@ class login_view(View):
                 return redirect("blog:home-page")
             else:
                 messages.error(request, "Username or password wrong")
-                return redirect("blog:login")
+                return redirect("blog:login-page")
 
         else:
             return render(request, "blog/login.html", {"form": form})
@@ -166,7 +166,7 @@ class register_view(View):
         return render(request, "blog/register.html", {"form": form})
     
     def post(self, request):
-        form = UserRegistrationForm(data=request.POST)
+        form = UserRegistrationForm(request.POST, request.FILES)
         if form.is_valid():
             messages.success(request, "User successfully registered")
             form.save()
